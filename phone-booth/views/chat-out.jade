@@ -1,0 +1,27 @@
+doctype strict
+
+html
+  head
+    meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
+
+    title Log book view
+
+    script(src="/socket.io/socket.io.js")
+    script(src="js/jquery-1.11.1.js")
+    script(src="/semantic/dist/semantic.min.js")
+    script(src="js/script.js")
+
+    link(rel="stylesheet", href="style.css")
+    link(rel="stylesheet", href="/semantic/dist/semantic.min.css")
+    style(type="text/css").
+      body {
+        background: black;
+      }
+
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+
+  body
+    #main.ui.text.container
+      h3 If you were forced to leave your home, what is the one thing that you would take with you?
+      hr
+      #messages

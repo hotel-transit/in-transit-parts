@@ -1,0 +1,11 @@
+* INTERACTIVE PARTS OF THE IN-TRANSIT PROJECT
+
+** PHONE BOOTH
+
+Digital log book using a chat-like interface.
+
+*** USAGE
+
+First run =npm install= to install the npm dependencies.
+
+Server runs at port =3121=.

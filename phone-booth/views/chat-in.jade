@@ -1,0 +1,40 @@
+doctype strict
+
+html
+  head
+    meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
+
+    title Log book entry
+
+    script(src="/socket.io/socket.io.js")
+    script(src="js/jquery-1.11.1.js")
+    script(src="/semantic/dist/semantic.min.js")
+    script(src="js/script.js")
+
+    link(rel="stylesheet", href="style.css")
+    link(rel="stylesheet", href="/semantic/dist/semantic.min.css")
+    style(type="text/css").
+      body {
+        background: black;
+      }
+
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+
+  body
+    #main.ui.text.container
+      h3 If you were forced to leave your home, what is the one thing that you would take with you?
+      hr
+      #formdiv(style="padding:1%;")
+        form.ui.form#chat-form(name="chatForm", action="/send", enctype="multipart/form-data", method="post")
+          input#chat-msg(name="msg", style="width:100%;", autocomplete="off", placeholder="Message")
+          #radios
+            input(type="radio", name="color", value="black" checked)
+            | <span style="color:black;">B </span>
+            input(type="radio", name="color", value="grey")
+            | <span style="color:grey;">G </span>
+            input(type="radio", name="color", value="maroon")
+            | <span style="color:maroon;">R </span>
+          | Show a picture:
+          br
+          input#file-upload(name="upload", type="file", accept="image/jpeg,image/png,image/gif")
+          input.small.ui.button.black(type="submit", value="Send")
