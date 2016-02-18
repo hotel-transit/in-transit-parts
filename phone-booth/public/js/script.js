@@ -4,11 +4,16 @@ jQuery(document).ready(function ($) {
 
     // chat form handling
     $('#chat-form').submit(function (event) {
+        // Get canvas information
+        var sketchdata = document.getElementById("sketchpad").toDataURL();
+        var empty = document.getElementById("emptycanvas").toDataURL();
+        if (sketchdata != empty)
+            $('#sketch').val(sketchdata);
         var x = document.getElementById("file-upload");
         var s = $(this).serializeArray();
         var msg = s[0].value;
-        var clr = s[1].value;
-        if (x.files.length == 0 && msg == "") {
+        var sketch = s[2].value;
+        if (x.files.length == 0 && msg == "" && sketch == "") {
             event.preventDefault();
         }
     });

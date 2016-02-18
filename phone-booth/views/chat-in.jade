@@ -40,8 +40,9 @@ html
           input#file-upload(name="upload", type="file", accept="image/jpeg,image/png,image/gif")
           br
           input#sketch(name="sketch", type="hidden")
-        #canvas-cont
+        #canvas-cont(align="center")
           | Write something with fingers or mouse:
           canvas#sketchpad(height="250px", width="600px") Sorry! This feature is not supported by your browser!
+          canvas#emptycanvas(height="250px", width="600px", style="display:none;")
           br
         input.small.ui.button.black(type="submit", form="chat-form" value="Send")

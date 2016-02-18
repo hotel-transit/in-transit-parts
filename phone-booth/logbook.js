@@ -11,8 +11,21 @@ var jade = require('jade'),
 var exports = require('./exports.js');
 
 // Define upload handler
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, exports.uploadFolder);
+    },
+    filename: function (req, file, cb) {
+        var n = file.originalname;
+        n = n.substring(n.lastIndexOf("."), n.length);
+        var d = new Date();
+        n = exports.timestamp(d) + n;
+        cb(null, n);
+    }
+});
+
 var upload = multer({
-    dest: exports.uploadFolder
+    storage: storage
 });
 
 // Define template engine
@@ -43,7 +56,7 @@ app.post('/send', upload.any(), function (req, res) {
         sketchData = req.body.sketch;
 
     if (req.files.length > 0) {
-        image = req.files[0].filename;
+        file = req.files[0].filename;
     }
     console.log("Filename is: ", file);
     console.log("Color is: ", color, "\nMessage is: ", message);
@@ -58,7 +71,7 @@ app.post('/send', upload.any(), function (req, res) {
     if (sketchData != "") {
         sketchData = sketchData.replace(/^data:image\/png;base64,/, "");
         var d = new Date();
-        var fname = d.getFullYear() + d.getMonth() + d.getDate() + d.getHour() + d.getMinutes() + d.getSeconds() + ".png";
+        var fname = exports.timestamp(d) + ".png";
         fs.writeFileSync(exports.uploadFolder + "/" + fname, sketchData, 'base64');
         message += exports.makeEntry(color, "<img style='width:40%' src='user-chat-uploads/" + fname + "' />");        
     }

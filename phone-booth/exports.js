@@ -9,7 +9,7 @@ exports.chatfile = process.cwd() + '/public/chat.html';
 // Make a chat entry
 exports.makeEntry = function (color, message) {
     var pos = Math.floor(Math.random()*60);
-    var entry = "<span style='color:" + color + ";margin-left:" + pos + "%;'>" + message + "</span>";
+    var entry = "<span style='color:" + color + ";margin-left:" + pos + "%;'>" + message + "</span><br/>";
     return entry;
 };
 
@@ -21,4 +21,11 @@ exports.existsSync = function (filename) {
     } catch(ex) {
         return false;
     }
+};
+
+// Timestamp string
+
+exports.timestamp = function (d) {
+    var ts = d.getFullYear() + "" + d.getMonth() + "" + d.getDate() + "" + d.getHours() + "" + d.getMinutes() + "" + d.getSeconds();
+    return ts;
 };
