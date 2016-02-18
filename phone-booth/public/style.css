@@ -31,3 +31,9 @@ h3 {
     max-width: 95%;
     max-height: 95%
 }
+
+#sketchpad {
+    border: 2px solid grey;
+
+    position: relative;
+}

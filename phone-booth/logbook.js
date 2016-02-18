@@ -37,25 +37,32 @@ app.get('/log-output', function (req, res) {
 // Chat post request
 app.post('/send', upload.any(), function (req, res) {
     console.log("Uploading...\nFiles: ", req.files, "\nBody: ", req.body);
-    var image = "",
-        message = "",
-        color = "";
+    var file = "",
+        message = req.body.msg,
+        color = req.body.color,
+        sketchData = req.body.sketch;
 
     if (req.files.length > 0) {
         image = req.files[0].filename;
     }
-    console.log("Filename is: ", image);
-    message = req.body.msg;
-    color = req.body.color;
+    console.log("Filename is: ", file);
     console.log("Color is: ", color, "\nMessage is: ", message);
     // Function to create entry
     var c = fs.readFileSync(exports.chatfile, 'utf8');
     if (message != "") {
         message = exports.makeEntry(color, message);
     }
-    if (image != "") {
-        message += exports.makeEntry(color, "<img style='width:25%' src='user-chat-uploads/" + image + "' />");
+    if (file != "") {
+        message += exports.makeEntry(color, "<img style='width:25%' src='user-chat-uploads/" + file + "' />");
     }
+    if (sketchData != "") {
+        sketchData = sketchData.replace(/^data:image\/png;base64,/, "");
+        var d = new Date();
+        var fname = d.getFullYear() + d.getMonth() + d.getDate() + d.getHour() + d.getMinutes() + d.getSeconds() + ".png";
+        fs.writeFileSync(exports.uploadFolder + "/" + fname, sketchData, 'base64');
+        message += exports.makeEntry(color, "<img style='width:40%' src='user-chat-uploads/" + fname + "' />");        
+    }
+    
     var chatStream = fs.createWriteStream(exports.chatfile);
     chatStream.end(message + c, (err) => {
         if (err) throw err;
