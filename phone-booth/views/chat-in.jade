@@ -10,6 +10,7 @@ html
     script(src="js/jquery-1.11.1.js")
     script(src="/semantic/dist/semantic.min.js")
     script(src="js/script.js")
+    script(src="js/canvas.js")
 
     link(rel="stylesheet", href="style.css")
     link(rel="stylesheet", href="/semantic/dist/semantic.min.css")
@@ -20,7 +21,7 @@ html
 
     meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
 
-  body
+  body(onload="init()")
     #main.ui.text.container
       h3 If you were forced to leave your home, what is the one thing that you would take with you?
       hr
@@ -37,4 +38,11 @@ html
           | Show a picture:
           br
           input#file-upload(name="upload", type="file", accept="image/jpeg,image/png,image/gif")
-          input.small.ui.button.black(type="submit", value="Send")
+          br
+          input#sketch(name="sketch", type="hidden")
+        #canvas-cont(align="center")
+          | Write something with fingers or mouse:
+          canvas#sketchpad(height="250px", width="600px") Sorry! This feature is not supported by your browser!
+          canvas#emptycanvas(height="250px", width="600px", style="display:none;")
+          br
+        input.small.ui.button.black(type="submit", form="chat-form" value="Send")

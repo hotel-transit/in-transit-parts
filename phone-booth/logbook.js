@@ -11,8 +11,21 @@ var jade = require('jade'),
 var exports = require('./exports.js');
 
 // Define upload handler
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, exports.uploadFolder);
+    },
+    filename: function (req, file, cb) {
+        var n = file.originalname;
+        n = n.substring(n.lastIndexOf("."), n.length);
+        var d = new Date();
+        n = exports.timestamp(d) + n;
+        cb(null, n);
+    }
+});
+
 var upload = multer({
-    dest: exports.uploadFolder
+    storage: storage
 });
 
 // Define template engine
@@ -37,25 +50,32 @@ app.get('/log-output', function (req, res) {
 // Chat post request
 app.post('/send', upload.any(), function (req, res) {
     console.log("Uploading...\nFiles: ", req.files, "\nBody: ", req.body);
-    var image = "",
-        message = "",
-        color = "";
+    var file = "",
+        message = req.body.msg,
+        color = req.body.color,
+        sketchData = req.body.sketch;
 
     if (req.files.length > 0) {
-        image = req.files[0].filename;
+        file = req.files[0].filename;
     }
-    console.log("Filename is: ", image);
-    message = req.body.msg;
-    color = req.body.color;
+    console.log("Filename is: ", file);
     console.log("Color is: ", color, "\nMessage is: ", message);
     // Function to create entry
     var c = fs.readFileSync(exports.chatfile, 'utf8');
     if (message != "") {
         message = exports.makeEntry(color, message);
     }
-    if (image != "") {
-        message += exports.makeEntry(color, "<img style='width:25%' src='user-chat-uploads/" + image + "' />");
+    if (file != "") {
+        message += exports.makeEntry(color, "<img style='width:25%' src='user-chat-uploads/" + file + "' />");
     }
+    if (sketchData != "") {
+        sketchData = sketchData.replace(/^data:image\/png;base64,/, "");
+        var d = new Date();
+        var fname = exports.timestamp(d) + ".png";
+        fs.writeFileSync(exports.uploadFolder + "/" + fname, sketchData, 'base64');
+        message += exports.makeEntry(color, "<img style='width:40%' src='user-chat-uploads/" + fname + "' />");        
+    }
+    
     var chatStream = fs.createWriteStream(exports.chatfile);
     chatStream.end(message + c, (err) => {
         if (err) throw err;
