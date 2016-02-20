@@ -24,6 +24,10 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('#clearcanvas').on('click', function(event) {
+        event.preventDefault();
+    });
+
     // display chat content
     socket.on('display chat', function (msg) {
         $('#messages').html(msg);

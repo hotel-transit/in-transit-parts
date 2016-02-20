@@ -43,6 +43,8 @@ html
         #canvas-cont(align="center")
           | Write something with fingers or mouse:
           canvas#sketchpad(height="250px", width="600px") Sorry! This feature is not supported by your browser!
+          br
+          a#clearcanvas(href="", onclick="clearCanvas(canvas, ctx)") Clear sketchpad
           canvas#emptycanvas(height="250px", width="600px", style="display:none;")
           br
         input.small.ui.button.black(type="submit", form="chat-form" value="Send")
