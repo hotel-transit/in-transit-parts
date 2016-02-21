@@ -53,7 +53,8 @@ app.post('/send', upload.any(), function (req, res) {
     var file = "",
         message = req.body.msg,
         color = req.body.color,
-        sketchData = req.body.sketch;
+        sketchData = req.body.sketch,
+        scale = req.body.scale;
 
     if (req.files.length > 0) {
         file = req.files[0].filename;
@@ -73,7 +74,7 @@ app.post('/send', upload.any(), function (req, res) {
         var d = new Date();
         var fname = exports.timestamp(d) + ".png";
         fs.writeFileSync(exports.uploadFolder + "/" + fname, sketchData, 'base64');
-        message += exports.makeEntry(color, "<img style='width:40%' src='user-chat-uploads/" + fname + "' />");        
+        message += exports.makeEntry(color, "<img style='width:" + scale + "%' src='user-chat-uploads/" + fname + "' />");        
     }
     
     var chatStream = fs.createWriteStream(exports.chatfile);

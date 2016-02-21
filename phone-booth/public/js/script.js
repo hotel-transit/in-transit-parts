@@ -1,12 +1,18 @@
 var socket = io();
 
 jQuery(document).ready(function ($) {
-    if ($(window).width() > 800)
+    if ($(window).width() > 800) {
         $('#sketchpad').attr("width", "600px");
-    else if ($(window).width() > 600)
+        $('#scale').val(40);
+    }
+    else if ($(window).width() > 600) {
         $('#sketchpad').attr("width", "300px");
-    else
+        $('#scale').val(20);
+    }
+    else {
         $('#sketchpad').attr("width", "250px");
+        $('#scale').val(17);
+    }
 
     // chat form handling
     $('#chat-form').submit(function (event) {
