@@ -49,7 +49,7 @@ app.get('/log-output', function (req, res) {
 
 // Chat post request
 app.post('/send', upload.any(), function (req, res) {
-    console.log("Uploading...\nFiles: ", req.files, "\nBody: ", req.body);
+    // console.log("Uploading...\nFiles: ", req.files, "\nBody: ", req.body);
     var file = "",
         message = req.body.msg,
         color = req.body.color,
