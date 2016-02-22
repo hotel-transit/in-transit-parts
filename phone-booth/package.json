@@ -1,5 +1,5 @@
 {
-  "name": "phone-booth",
+  "name": "log-book",
   "version": "1.0.0",
   "description": "Log book in form of a chatroom for the in-transit project",
   "main": "logbook.js",
